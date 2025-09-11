@@ -2,7 +2,8 @@ from flask import Flask
 
 app = Flask(__name__)
 
-    # creating a class for train details
+# creating a class for train details
+
 
 class Train:
     def __init__(self, train_no, train_name, available_seats):
@@ -11,7 +12,7 @@ class Train:
         self.available_seats = available_seats
 
     # method to display all the trains
-    
+
     def display_AllTrains(self):
         print("\n--- Train Details ---")
         print(f"Train No: {self.train_no}")
@@ -20,32 +21,41 @@ class Train:
         print("---------------------\n")
 
     # method to book_tickets
-    
+
     def book_tickets(self, num_tickets):
         if num_tickets <= 0:
             print("Please enter a valid number of tickets.")
 
         if num_tickets <= self.available_seats:
             self.available_seats -= num_tickets
-            print(f"Your {num_tickets} tickets have been booked! Remaining seats: {self.available_seats}")
+            print(
+                f"Your {num_tickets} tickets have been booked! Remaining seats: {self.available_seats}"
+            )
         else:
             print(f"only {self.available_seats} seats are available.")
 
     # methods to cancel tickets
-    
+
     def cancel_tickets(self, num_tickets):
         if num_tickets <= 0:
             print("Please enter a valid number of tickets.")
         else:
             self.available_seats += num_tickets
-            print(f"Your {num_tickets} tickets have been cancelled. Total available seats: {self.available_seats}")
+            print(
+                f"Your {num_tickets} tickets have been cancelled. Total available seats: {self.available_seats}"
+            )
 
 
 def main():
-    
-    # object created for a train
-    
-    train1 = Train(9094, "Trichy Express", 60)
+
+    # Create a list of four train objects
+
+    trains = [
+        Train(9094, "Trichy Express", 60),
+        Train(1234, "Madurai Express", 100),
+        Train(5678, "Chennai Express", 50),
+        Train(4321, "Kovai Express", 75),
+    ]
 
     while True:
         print("--- Main Menu ---")
@@ -57,28 +67,33 @@ def main():
         choice = input("Enter your choice (1-4): ")
 
         if choice == "1":
-            train1.display_AllTrains()
+            for train in trains:
+                train.display_AllTrains()
 
         elif choice == "2":
             try:
                 train_no = int(input("Enter train number: "))
-                if train_no == train1.train_no:
-                    num_tickets = int(input("Enter number of tickets to book: "))
-                    train1.book_tickets(num_tickets)
+                for train in trains:
+                    if train.train_no == train_no:
+                        num_tickets = int(input("Enter number of tickets to book: "))
+                        train.book_tickets(num_tickets)
+                        break
                 else:
                     print("Invalid train number. Booking failed.")
-            except:
+            except ValueError:
                 print("Invalid input. Please enter a number.")
 
         elif choice == "3":
             try:
                 train_no = int(input("Enter train number: "))
-                if train_no == train1.train_no:
-                    num_tickets = int(input("Enter number of tickets to cancel: "))
-                    train1.cancel_tickets(num_tickets)
+                for train in trains:
+                    if train.train_no == train_no:
+                        num_tickets = int(input("Enter number of tickets to cancel: "))
+                        train.cancel_tickets(num_tickets)
+                        break
                 else:
                     print("Invalid train number. Cancellation failed.")
-            except:
+            except ValueError:
                 print("Invalid input. Please enter a number.")
 
         elif choice == "4":
