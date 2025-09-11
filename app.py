@@ -26,7 +26,7 @@ class Train:
 
     def book_tickets(self, num_tickets):
 
-        # validating tickets if cancel ticket count is less than or equal to zero
+        # validating tickets if booking ticket count is less than or equal to zero
 
         if num_tickets <= 0:
             print("Please enter a valid number of tickets.")
